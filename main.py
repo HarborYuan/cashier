@@ -2,10 +2,15 @@ from GoodsClass import Goods
 from Errors import *
 from Ticket import ticket_printer
 from Readme import read_me
+import SL
 
 my_goods = []
 
 if __name__ == '__main__':
+    try:
+        my_goods=SL.load()
+    except (FileNotFoundError,EOFError):
+        pass
     while (True):
         try:
             x=input(read_me)
@@ -69,7 +74,8 @@ if __name__ == '__main__':
                 if x=="Y":
                     ticket_printer(lister,number,total)
             if (x==4):
-                print("欢迎下次使用")
+                SL.save(my_goods)
+                print("成功保存数据，欢迎下次使用")
                 break
         except ValueError as e:
             print ("输入非法请重试")
